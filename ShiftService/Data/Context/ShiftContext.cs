@@ -19,5 +19,24 @@ namespace ShiftService.Context
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<User>(entity =>
+            {
+
+                entity.HasKey(e => new { e.id, e.shiftId });
+
+                entity.Property(e => e.id).HasColumnName("id");
+
+                entity.Property(e => e.name).HasColumnName("name");
+
+                entity.Property(e => e.shiftId).HasColumnName("shiftId");
+
+            });
+
+        }
+
+
     }
 }

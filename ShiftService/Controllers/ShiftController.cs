@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ShiftService.Business.Shifts;
 using ShiftService.Models;
 
 namespace ShiftService.Controllers
@@ -10,27 +11,30 @@ namespace ShiftService.Controllers
     [Route("api/[controller]")]
     public class ShiftController : Controller
     {
+
+        private readonly IShiftManager _manager;
+
+        public ShiftController(IShiftManager manager)
+        {
+            this._manager = manager;
+        }
+
         [HttpGet("GetShift/{id}")]
         public Shift GetShift(int id)
         {
-            return new Shift(1, 4, DateTime.Now, new List<User>() { new User(id, "david") });
+            return _manager.GetShift(id);
         }
 
         [HttpGet("GetShifts")]
         public List<Shift> GetShifts()
         {
-            return new List<Shift>() { new Shift(1, 4, DateTime.Now, null) };
+            return _manager.GetShifts();
         }
 
         [HttpGet("GetShiftsForUser/{userId}")]
         public List<Shift> GetShiftsForUser(int userId)
         {
-            return new List<Shift>() { new Shift(1, 4, DateTime.Now, new List<User>() { new User(3, "David") }),
-            new Shift(2, 4, DateTime.Today, new List<User>() { new User(3, "David"),
-                                                               new User(5, "Michelle")}),
-            new Shift(3, 5, DateTime.Today, new List<User>() { new User(3, "David"),
-                                                               new User(4, "Alex"),
-                                                               new User(5, "Michelle")})};
+            return _manager.GetShiftsForUser(userId);
         }
     }
 }

@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShiftService.Models;
 using C = Common.DataTransfer.Shift;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShiftService.Business.Shifts
 {
@@ -11,29 +13,38 @@ namespace ShiftService.Business.Shifts
     {
         private readonly ShiftContext _shiftContext;
 
-        public ShiftManager(ShiftContext shifContext)
+        public ShiftManager(ShiftContext shiftContext)
         {
-            _shiftContext = shifContext;
+            _shiftContext = shiftContext;
         }
 
-        public C.Shift GetShift(int id)
+        public Shift GetShift(int id)
         {
-            return _shiftContext.Shifts.Find(id);
+            return _shiftContext.Shifts.Find(id).fromDTO();
         }
 
-        public List<C.Shift> GetShifts()
+        public List<Shift> GetShifts()
         {
-            return _shiftContext.Shifts.OrderBy(x => x.shiftDate).ToList();
+            List<Shift> returnList = new List<Shift>();
+
+
+            foreach (C.Shift shift in _shiftContext.Shifts.OrderBy(x => x.shiftDate).ToList())
+            {
+                returnList.Add(shift.fromDTO());
+            }
+            
+            
+            
+            return returnList;
         }
 
-        public List<C.Shift> GetShiftsForUser(int userId)
+        public List<Shift> GetShiftsForUser(int userId)
         {
-            var shifts =
-                from s in this._shiftContext.Shifts
-                where s.workingEmployees.Any(x => x.id == userId)
-                select s;
+            return this._shiftContext.Shifts.Where(x => x.workingEmployees.Any(s => s.id == userId))
+                .Include(x => x.workingEmployees)
+                .Select(x => x.fromDTO())
+                .ToList();
 
-            return shifts.OrderBy(x => x.shiftDate).ToList();
         }
     }
 }
