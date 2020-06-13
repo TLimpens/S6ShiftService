@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ShiftService.Models;
 using C = Common.DataTransfer.Shift;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ShiftService.Business.Shifts
 {
@@ -20,31 +21,33 @@ namespace ShiftService.Business.Shifts
 
         public Shift GetShift(int id)
         {
-            return _shiftContext.Shifts.Find(id).fromDTO();
+            return this._shiftContext.Shifts.Where(x => x.id == id)
+                        .Include(x => x.workingEmployees)
+                        .Select(x => x.fromDTO()).Single();
         }
 
         public List<Shift> GetShifts()
         {
-            List<Shift> returnList = new List<Shift>();
-
-
-            foreach (C.Shift shift in _shiftContext.Shifts.OrderBy(x => x.shiftDate).ToList())
-            {
-                returnList.Add(shift.fromDTO());
-            }
-            
-            
-            
-            return returnList;
-        }
-
-        public List<Shift> GetShiftsForUser(int userId)
-        {
-            return this._shiftContext.Shifts.Where(x => x.workingEmployees.Any(s => s.id == userId))
+            return _shiftContext.Shifts
                 .Include(x => x.workingEmployees)
                 .Select(x => x.fromDTO())
                 .ToList();
+        }
 
+        public async Task<List<Shift>> GetShiftsForUser(int userId)
+        {
+
+            return await _shiftContext.Shifts.Where(x => x.workingEmployees.Any(s => s.id == userId))
+                .Include(x => x.workingEmployees)
+                .Select(x => x.fromDTO())
+                .ToListAsync();
+
+        }
+
+        public void PostNewShift(Shift shift)
+        {
+            _shiftContext.Add(shift.ToDTO());
+            _shiftContext.SaveChanges();
         }
     }
 }

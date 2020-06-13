@@ -32,9 +32,16 @@ namespace ShiftService.Controllers
         }
 
         [HttpGet("GetShiftsForUser/{userId}")]
-        public List<Shift> GetShiftsForUser(int userId)
+        public Task<List<Shift>> GetShiftsForUser(int userId)
         {
             return _manager.GetShiftsForUser(userId);
+        }
+
+        [HttpPost("PostNewShift")]
+        public void PostNewShift([FromBody]Shift shift)
+        {
+            _manager.PostNewShift(shift);
+
         }
     }
 }

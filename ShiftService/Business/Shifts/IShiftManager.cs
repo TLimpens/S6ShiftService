@@ -13,6 +13,7 @@ namespace ShiftService.Business.Shifts
 
         public List<Shift> GetShifts();
 
-        public List<Shift> GetShiftsForUser(int userId);
+        public Task<List<Shift>> GetShiftsForUser(int userId);
+        public void PostNewShift(Shift shift);
     }
 }
