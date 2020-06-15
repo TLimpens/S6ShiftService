@@ -13,6 +13,8 @@ namespace ShiftService.Business.Shifts
 
         public Task<List<Shift>> GetShiftsAsync();
 
+        public Task<List<Shift>> GetAllUpcommingShiftsAsync();
+
         public Task<List<Shift>> GetShiftsForUserAsync(int userId);
         public Task PostNewShiftAsync(Shift shift);
     }

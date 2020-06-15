@@ -44,6 +44,16 @@ namespace ShiftService.Business.Shifts
 
         }
 
+        public async Task<List<Shift>> GetAllUpcommingShiftsAsync()
+        {
+
+            return await _shiftContext.Shifts.Where(x => x.shiftDate >= DateTime.Now)
+                .Include(x => x.workingEmployees)
+                .Select(x => x.fromDTO())
+                .ToListAsync();
+
+        }
+
         public async Task PostNewShiftAsync(Shift shift)
         {
             _shiftContext.Add(shift.ToDTO());

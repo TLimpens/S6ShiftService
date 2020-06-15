@@ -31,6 +31,12 @@ namespace ShiftService.Controllers
             return await _manager.GetShiftsAsync();
         }
 
+        [HttpGet("getallupcommingshifts")]
+        public async Task<List<Shift>> GetAllUpcommingShifts()
+        {
+            return await _manager.GetAllUpcommingShiftsAsync();
+        }
+
         [HttpGet("GetShiftsForUser/{userId}")]
         public async Task<List<Shift>> GetShiftsForUser(int userId)
         {
