@@ -6,10 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ShiftService.Business.Shifts;
+using ShiftService.Context;
+
+
 
 namespace ShiftService
 {
@@ -26,6 +31,8 @@ namespace ShiftService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient<IShiftManager, ShiftManager>();
+            services.AddDbContext<ShiftContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ShiftContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

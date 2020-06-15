@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using U = Common.DataTransfer.User;
 
 namespace ShiftService.Models
 {
@@ -14,6 +15,11 @@ namespace ShiftService.Models
         {
             this.id = id;
             this.name = name;
+        }
+
+        public U ToDTO()
+        {
+            return new U(this.id, this.name, 0);
         }
     }
 }

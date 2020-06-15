@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ShiftService.Business.Shifts;
 using ShiftService.Models;
 
 namespace ShiftService.Controllers
@@ -10,27 +11,37 @@ namespace ShiftService.Controllers
     [Route("api/[controller]")]
     public class ShiftController : Controller
     {
-        [HttpGet("GetShift/{id}")]
-        public Shift GetShift(int id)
+
+        private readonly IShiftManager _manager;
+
+        public ShiftController(IShiftManager manager)
         {
-            return new Shift(1, 4, DateTime.Now, new List<User>() { new User(id, "david") });
+            this._manager = manager;
+        }
+
+        [HttpGet("GetShift/{id}")]
+        public async Task<Shift> GetShift(int id)
+        {
+            return await _manager.GetShiftAsync(id);
         }
 
         [HttpGet("GetShifts")]
-        public List<Shift> GetShifts()
+        public async Task<List<Shift>> GetShifts()
         {
-            return new List<Shift>() { new Shift(1, 4, DateTime.Now, null) };
+            return await _manager.GetShiftsAsync();
         }
 
         [HttpGet("GetShiftsForUser/{userId}")]
-        public List<Shift> GetShiftsForUser(int userId)
+        public async Task<List<Shift>> GetShiftsForUser(int userId)
         {
-            return new List<Shift>() { new Shift(1, 4, DateTime.Now, new List<User>() { new User(3, "David") }),
-            new Shift(2, 4, DateTime.Today, new List<User>() { new User(3, "David"),
-                                                               new User(5, "Michelle")}),
-            new Shift(3, 5, DateTime.Today, new List<User>() { new User(3, "David"),
-                                                               new User(4, "Alex"),
-                                                               new User(5, "Michelle")})};
+            return await _manager.GetShiftsForUserAsync(userId);
+        }
+
+        [HttpPost("PostNewShift")]
+        public async void PostNewShift([FromBody]Shift shift)
+        {
+            await _manager.PostNewShiftAsync(shift);
+
         }
     }
 }
