@@ -9,11 +9,11 @@ namespace ShiftService.Business.Shifts
 {
     public interface IShiftManager
     {
-        public Shift GetShift(int id);
+        public Task<Shift> GetShiftAsync(int id);
 
-        public List<Shift> GetShifts();
+        public Task<List<Shift>> GetShiftsAsync();
 
-        public Task<List<Shift>> GetShiftsForUser(int userId);
-        public void PostNewShift(Shift shift);
+        public Task<List<Shift>> GetShiftsForUserAsync(int userId);
+        public Task PostNewShiftAsync(Shift shift);
     }
 }

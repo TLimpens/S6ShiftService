@@ -19,22 +19,22 @@ namespace ShiftService.Business.Shifts
             _shiftContext = shiftContext;
         }
 
-        public Shift GetShift(int id)
+        public async Task<Shift> GetShiftAsync(int id)
         {
-            return this._shiftContext.Shifts.Where(x => x.id == id)
+            return await _shiftContext.Shifts.Where(x => x.id == id)
                         .Include(x => x.workingEmployees)
-                        .Select(x => x.fromDTO()).Single();
+                        .Select(x => x.fromDTO()).SingleAsync();
         }
 
-        public List<Shift> GetShifts()
+        public async Task<List<Shift>> GetShiftsAsync()
         {
-            return _shiftContext.Shifts
+            return await _shiftContext.Shifts
                 .Include(x => x.workingEmployees)
                 .Select(x => x.fromDTO())
-                .ToList();
+                .ToListAsync();
         }
 
-        public async Task<List<Shift>> GetShiftsForUser(int userId)
+        public async Task<List<Shift>> GetShiftsForUserAsync(int userId)
         {
 
             return await _shiftContext.Shifts.Where(x => x.workingEmployees.Any(s => s.id == userId))
@@ -44,10 +44,10 @@ namespace ShiftService.Business.Shifts
 
         }
 
-        public void PostNewShift(Shift shift)
+        public async Task PostNewShiftAsync(Shift shift)
         {
             _shiftContext.Add(shift.ToDTO());
-            _shiftContext.SaveChanges();
+            await _shiftContext.SaveChangesAsync();
         }
     }
 }

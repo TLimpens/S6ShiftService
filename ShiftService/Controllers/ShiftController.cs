@@ -20,27 +20,27 @@ namespace ShiftService.Controllers
         }
 
         [HttpGet("GetShift/{id}")]
-        public Shift GetShift(int id)
+        public async Task<Shift> GetShift(int id)
         {
-            return _manager.GetShift(id);
+            return await _manager.GetShiftAsync(id);
         }
 
         [HttpGet("GetShifts")]
-        public List<Shift> GetShifts()
+        public async Task<List<Shift>> GetShifts()
         {
-            return _manager.GetShifts();
+            return await _manager.GetShiftsAsync();
         }
 
         [HttpGet("GetShiftsForUser/{userId}")]
-        public Task<List<Shift>> GetShiftsForUser(int userId)
+        public async Task<List<Shift>> GetShiftsForUser(int userId)
         {
-            return _manager.GetShiftsForUser(userId);
+            return await _manager.GetShiftsForUserAsync(userId);
         }
 
         [HttpPost("PostNewShift")]
-        public void PostNewShift([FromBody]Shift shift)
+        public async void PostNewShift([FromBody]Shift shift)
         {
-            _manager.PostNewShift(shift);
+            await _manager.PostNewShiftAsync(shift);
 
         }
     }
