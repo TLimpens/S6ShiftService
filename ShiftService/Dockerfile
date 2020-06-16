@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["ShiftService/ShiftService.csproj", "ShiftService/"]
+COPY ["ShiftService.csproj", "ShiftService/"]
 RUN dotnet restore "ShiftService/ShiftService.csproj"
 COPY . .
 WORKDIR "/src/ShiftService"
