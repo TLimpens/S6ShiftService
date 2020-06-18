@@ -5,7 +5,7 @@
     <UserSecretsId>0da9f797-38f9-4ec7-8619-78fc428e280b</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <ApplicationIcon />
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <StartupObject />
   </PropertyGroup>
 
