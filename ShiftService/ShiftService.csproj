@@ -6,7 +6,8 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
-    <StartupObject></StartupObject>
+    <StartupObject>ShiftService.Program</StartupObject>
+    <AssemblyName>ShiftService</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
