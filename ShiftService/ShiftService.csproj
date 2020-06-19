@@ -5,8 +5,8 @@
     <UserSecretsId>0da9f797-38f9-4ec7-8619-78fc428e280b</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
+    <OutputType>Exe</OutputType>
+    <StartupObject>ShiftService.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
