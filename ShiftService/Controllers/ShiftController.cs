@@ -50,5 +50,11 @@ namespace ShiftService.Controllers
 
         }
 
+        [HttpGet("test")]
+        public string test()
+        {
+            return "test";
+        }
+
     }
 }
