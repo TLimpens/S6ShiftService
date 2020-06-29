@@ -49,5 +49,12 @@ namespace ShiftService.Controllers
             await _manager.PostNewShiftAsync(shift);
 
         }
+
+        [HttpGet("test")]
+        public void GetTest()
+        {
+            //this is a test
+        }
+
     }
 }
