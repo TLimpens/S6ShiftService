@@ -50,11 +50,5 @@ namespace ShiftService.Controllers
 
         }
 
-        [HttpGet("test")]
-        public void GetTest()
-        {
-            //this is a test
-        }
-
     }
 }
